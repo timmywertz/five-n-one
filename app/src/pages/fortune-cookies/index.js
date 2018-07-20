@@ -1,6 +1,6 @@
 import React from "react";
-import fetch from "isomorphic-fetch";
 import { map } from "ramda";
+import { connect } from "react-redux";
 
 const li = cookies => {
   return (
@@ -10,26 +10,19 @@ const li = cookies => {
   );
 };
 
-class Cookies extends React.Component {
-  constructor() {
-    super();
-    this.state = { cookies: [] };
-  }
+const Cookies = props => {
+  return (
+    <div>
+      <h1>Fortune Cookies</h1>
+      <ul>{map(li, props.cookies)}</ul>
+    </div>
+  );
+};
 
-  componentDidMount() {
-    fetch("http://localhost:5000/fortune-cookies")
-      .then(res => res.json())
-      .then(cookies => this.setState({ cookies }));
-  }
+const mapStateToProps = state => {
+  return { cookies: state.fortuneCookies };
+};
 
-  render() {
-    return (
-      <div>
-        <h1>Fortune Cookies</h1>
-        <ul>{map(li, this.state.cookies)}</ul>
-      </div>
-    );
-  }
-}
+const connector = connect(mapStateToProps);
 
-export default Cookies;
+export default connector(Cookies);

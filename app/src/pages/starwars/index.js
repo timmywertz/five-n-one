@@ -1,34 +1,28 @@
 import React from "react";
-import fetch from "isomorphic-fetch";
 import { map } from "ramda";
+import { connect } from "react-redux";
 
-const li = name => {
+const li = starwarsName => {
   return (
-    <li key={name.id} style={{ name: name.name }}>
-      {name.name}
+    <li key={starwarsName.id} style={{ name: starwarsName.name }}>
+      {starwarsName.name}
     </li>
   );
 };
 
-class Names extends React.Component {
-  constructor() {
-    super();
-    this.state = { names: [] };
-  }
-  componentDidMount() {
-    fetch("http://localhost:5000/starwars")
-      .then(res => res.json())
-      .then(names => this.setState({ names }));
-  }
+const Starwars = props => {
+  return (
+    <div>
+      <h1>Star Wars Names</h1>
+      <ul>{map(li, props.starwarsNames)}</ul>
+    </div>
+  );
+};
 
-  render() {
-    return (
-      <div>
-        <h1>Star Wars Names</h1>
-        <ul>{map(li, this.state.names)}</ul>
-      </div>
-    );
-  }
-}
+const mapStateToProps = state => {
+  return { starwarsNames: state.starwarsNames };
+};
 
-export default Names;
+const connector = connect(mapStateToProps);
+
+export default connector(Starwars);
