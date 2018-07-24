@@ -1,10 +1,13 @@
 import React from "react";
 import { BrowserRouter, Route, Link, Switch } from "react-router-dom";
 import Colors from "./pages/colors";
+import ColorForm from "./pages/colors/form";
 import Buzzwords from "./pages/buzzwords";
+import BuzzwordForm from "./pages/buzzwords/form";
 import Names from "./pages/starwars";
 import Cookies from "./pages/fortune-cookies";
 import Emojis from "./pages/emojis";
+import EmojiForm from "./pages/emojis/form";
 
 const Menu = props => {
   return (
@@ -37,11 +40,14 @@ const App = props => {
       <div>
         <Switch>
           <Route exact path="/" component={Menu} />
-          <Route path="/colors" component={Colors} />
-          <Route path="/buzzwords" component={Buzzwords} />
-          <Route path="/starwars" component={Names} />
-          <Route path="/fortune-cookies" component={Cookies} />
-          <Route path="/emojis" component={Emojis} />
+          <Route exact path="/colors" component={Colors} />
+          <Route path="/colors/new" component={ColorForm} />
+          <Route exact path="/buzzwords" component={Buzzwords} />
+          <Route path="/buzzwords/new" component={BuzzwordForm} />
+          <Route exact path="/starwars" component={Names} />
+          <Route exact path="/fortune-cookies" component={Cookies} />
+          <Route exact path="/emojis" component={Emojis} />
+          <Route path="/emojis/new" component={EmojiForm} />
         </Switch>
       </div>
     </BrowserRouter>
